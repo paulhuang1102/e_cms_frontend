@@ -9,7 +9,18 @@ export default class Creator extends React.Component {
         const level = document.querySelector('input[name="level"]:checked').value;
         const api = this.props.api;
         const xhr = new XMLHttpRequest();
-        const path = '/manger/createUser';
+        const path = '/creator/createUser';
+
+        if (user.indexOf('\"') !== -1 || user.indexOf('\'') !== -1) {
+            alert('帳號不可有特殊符號');
+            return;
+        }
+
+        if (user.indexOf('\"') !== -1 || password.indexOf('\'') !== -1) {
+            alert('密碼不可有特殊符號');
+            return;
+        }
+
         xhr.open("POST", api + path);
         xhr.setRequestHeader('Accept', 'application/json');
         xhr.setRequestHeader('Content-Type', 'application/json');

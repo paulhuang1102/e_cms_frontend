@@ -1,4 +1,25 @@
 @import "normalize"
+@import "clearfix"
+
+$headerHeight: 80px
 
 .h-400
   height: 400px
+
+a:hover, a:focus
+  text-decoration: none
+
+header
+  @include clearfix
+  height: $headerHeight
+  line-height: $headerHeight
+  background-color: #999
+  text-align: center
+
+.logo
+  width: 250px
+  float: left
+
+.title
+  width: calc(100% - 250px)
+  float: right

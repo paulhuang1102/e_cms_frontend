@@ -12,7 +12,8 @@ module.exports = {
     entry: SRC_DIR + '/index.js',
     output: {
         path: DIST_DIR,
-        filename: './js/bundle.js',
+        publicPath: '/',
+        filename: 'js/bundle.js',
     },
     module: {
         loaders: [

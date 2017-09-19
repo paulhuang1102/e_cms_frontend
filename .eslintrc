@@ -84,6 +84,7 @@
     "global-require": "off",
     "class-methods-use-this": "off",
     "react/jsx-no-bind": "off",
-    "react/jsx-tag-spacing": "off"
+    "react/jsx-tag-spacing": "off",
+    "react/prop-types": "off"
   }
 }
