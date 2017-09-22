@@ -1,4 +1,5 @@
 import React from 'react';
+import { connectApi } from '../services/connectApi';
 
 export default class SignIn extends React.Component {
 
@@ -17,7 +18,6 @@ export default class SignIn extends React.Component {
         const user = document.getElementById('user').value;
         const password = document.getElementById('password').value;
         const api = this.props.api;
-        const xhr = new XMLHttpRequest();
         const path = '/user/signIn';
 
         if (user.indexOf('\"') !== -1 || user.indexOf('\'') !== -1) {
@@ -30,23 +30,15 @@ export default class SignIn extends React.Component {
             return;
         }
 
-        xhr.open("POST", api + path);
-        xhr.setRequestHeader('Accept', 'application/json');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({
-            user,
-            password
-        }));
-        xhr.onload = () => {
-            console.log(xhr.responseText);
-            if (xhr.status === 200) {
-                window.localStorage.setItem('currentUser', xhr.responseText);
+        connectApi('POST', api + path, JSON.stringify({ user, password }), (message) => {
+            if (JSON.parse(message).username === user) {
+                window.localStorage.setItem('currentUser', message);
                 alert('登入成功');
                 this.props.history.push('/manager/dashboard');
             } else {
                 alert('帳號或密碼錯誤');
             }
-        };
+        });
     }
 
     render() {

@@ -5,8 +5,11 @@ import Edit from './Edit';
 
 export default class Main extends React.Component {
     componentWillMount() {
-        const user = JSON.parse(window.localStorage.getItem('currentUser'));
-        if (!user) this.props.history.push('/');
+        console.log(this.props);
+        if (window.localStorage.getItem('currentUser')) {
+            const user = JSON.parse(window.localStorage.getItem('currentUser'));
+            if (!user) this.props.history.push('/');
+        }
     }
 
     logout() {
@@ -35,8 +38,9 @@ export default class Main extends React.Component {
                     </div>
                     <div className="col-9 no-gutters">
                         <Switch>
-                            <Route path="/manager/dashboard" render={props => <Dashboard {...props} />} />
-                            <Route path="/manager/edit" render={props => <Edit {...props} api={this.props.api} />} />
+                            <Route path="/manager/dashboard" render={props => <Dashboard {...props} api={this.props.api} posts={this.props.posts} getPosts={this.props.getPosts} />} />
+                            <Route exact path="/manager/edit" render={props => <Edit {...props} api={this.props.api} key={1} getPosts={this.props.getPosts} />} />
+                            <Route path="/manager/edit/:id" render={props => <Edit {...props} api={this.props.api} key={2} posts={this.props.posts} />} />
                         </Switch>
                     </div>
                 </div>

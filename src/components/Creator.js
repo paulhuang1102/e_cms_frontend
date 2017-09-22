@@ -1,4 +1,5 @@
 import React from 'react';
+import { connectApi } from '../services/connectApi';
 
 export default class Creator extends React.Component {
 
@@ -21,25 +22,15 @@ export default class Creator extends React.Component {
             return;
         }
 
-        xhr.open("POST", api + path);
-        xhr.setRequestHeader('Accept', 'application/json');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({
-            user,
-            password,
-            level
-        }));
-        xhr.onload = () => {
-            console.log(xhr.status, xhr.responseText);
-
-            if (xhr.responseText === 'success') {
+        connectApi('POST', api + path, JSON.stringify({ user, password, level }), (message) => {
+            if (message === 'success') {
                 document.getElementById('user').value = '';
                 document.getElementById('password').value = '';
                 alert(`新增成功${user}, 權限: ${level}`);
             } else {
                 alert(`錯誤: + ${xhr.response}`);
             }
-        };
+        });
     }
 
     render() {
